@@ -23,5 +23,22 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
        
      }
     });
+    on<AuthSingUp>((event, emit) async {
+      emit(AuthLoading());
+      try {
+        final user = await _authRepository.singUp(event.email, event.password);
+        if (user != null) {
+          emit(AuthAuthenticated(user));
+        } else {
+          emit(AuthError("Erro ao cadastrar"));
+        }
+      } catch (e) {
+        emit(AuthError(e.toString()));
+      }
+    });
+    on<AuthSignOut> ((event, emit) async {
+      await _authRepository.singOut();
+      emit(AuthUnauthenticated());
+    });
   }
 }

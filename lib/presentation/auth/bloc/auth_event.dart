@@ -18,4 +18,4 @@ final class AuthSingUp extends AuthEvent {
 
 }
 
-final class SignOut extends AuthEvent{}
+final class AuthSignOut extends AuthEvent{}
